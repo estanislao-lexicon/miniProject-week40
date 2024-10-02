@@ -1,0 +1,15 @@
+/home/estanislao-lexicon/Lexicon/Code/weekTwo/miniProject/productList/bin/Debug/net8.0/productList
+/home/estanislao-lexicon/Lexicon/Code/weekTwo/miniProject/productList/bin/Debug/net8.0/productList.deps.json
+/home/estanislao-lexicon/Lexicon/Code/weekTwo/miniProject/productList/bin/Debug/net8.0/productList.runtimeconfig.json
+/home/estanislao-lexicon/Lexicon/Code/weekTwo/miniProject/productList/bin/Debug/net8.0/productList.dll
+/home/estanislao-lexicon/Lexicon/Code/weekTwo/miniProject/productList/bin/Debug/net8.0/productList.pdb
+/home/estanislao-lexicon/Lexicon/Code/weekTwo/miniProject/productList/obj/Debug/net8.0/productList.GeneratedMSBuildEditorConfig.editorconfig
+/home/estanislao-lexicon/Lexicon/Code/weekTwo/miniProject/productList/obj/Debug/net8.0/productList.AssemblyInfoInputs.cache
+/home/estanislao-lexicon/Lexicon/Code/weekTwo/miniProject/productList/obj/Debug/net8.0/productList.AssemblyInfo.cs
+/home/estanislao-lexicon/Lexicon/Code/weekTwo/miniProject/productList/obj/Debug/net8.0/productList.csproj.CoreCompileInputs.cache
+/home/estanislao-lexicon/Lexicon/Code/weekTwo/miniProject/productList/obj/Debug/net8.0/productList.sourcelink.json
+/home/estanislao-lexicon/Lexicon/Code/weekTwo/miniProject/productList/obj/Debug/net8.0/productList.dll
+/home/estanislao-lexicon/Lexicon/Code/weekTwo/miniProject/productList/obj/Debug/net8.0/refint/productList.dll
+/home/estanislao-lexicon/Lexicon/Code/weekTwo/miniProject/productList/obj/Debug/net8.0/productList.pdb
+/home/estanislao-lexicon/Lexicon/Code/weekTwo/miniProject/productList/obj/Debug/net8.0/productList.genruntimeconfig.cache
+/home/estanislao-lexicon/Lexicon/Code/weekTwo/miniProject/productList/obj/Debug/net8.0/ref/productList.dll
