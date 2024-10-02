@@ -18,8 +18,8 @@ Write a console app which starts by asking the user for:
 - [] Your application needs at least 2 classes.
 - [] Use these classes when you add items to a list. 
 - [] You should be able to add items to the list(s) until you write "q" (for quit).
-- [] Summarize price when presenting list.
-- [] The list should be sorted from low price to high and a sum at the bottom.
+- [] Summarize price when presenting list. (LINQ)
+- [] The list should be sorted from low price to high and a sum at the bottom. (LINQ)
 
 
 ## Level 3
