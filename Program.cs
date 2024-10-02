@@ -13,7 +13,7 @@ class Program
             Console.ForegroundColor = ConsoleColor.Magenta;
             System.Console.WriteLine("To enter a new product - follow the instructions");
             Console.ForegroundColor = ConsoleColor.DarkBlue;
-            System.Console.WriteLine("To enter a ne product, enter 'P' | To search for a product, enter 'S' | To quit, enter 'Q'");
+            System.Console.WriteLine("To print the list of all prducts, enter 'P' | To enter a ne product, enter 'E' | To search for a product, enter 'S' | To quit, enter 'Q'");
             Console.ForegroundColor = ConsoleColor.Gray;
             
             System.Console.Write("Please enter the product category: ");
@@ -62,12 +62,14 @@ class Program
             System.Console.WriteLine("----------------------------------\n");
         } 
 
+        List<Item> productsSorted = products.OrderBy(product => product.Price).ToList();
+
         System.Console.WriteLine("\n----------------------------------");
         Console.ForegroundColor = ConsoleColor.Green;
         System.Console.WriteLine("Category".PadRight(20) + "Name".PadRight(20) + "Price".PadRight(20));
         
         Console.ForegroundColor = ConsoleColor.Gray;
-        foreach(Item product in products)    
+        foreach(Item product in productsSorted)    
         {
             product.Print();
         }
