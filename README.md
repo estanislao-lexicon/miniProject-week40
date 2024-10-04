@@ -1,7 +1,7 @@
 # Productlist
 
 ## Intro
-Write a console app which starts by asking the user for:
+Write a console app that starts by asking the user for:
 1. Category
 2. Product Name
 3. Price
@@ -18,7 +18,7 @@ Write a console app which starts by asking the user for:
 - [X] Your application needs at least 2 classes.
 - [X] Use these classes when you add items to a list. 
 - [X] You should be able to add items to the list(s) until you write "q" (for quit).
-- [X] Summarize price when presenting list. (LINQ)
+- [X] Summarize the price when presenting the list. (LINQ)
 - [X] The list should be sorted from low price to high and a sum at the bottom. (LINQ)
 
 
@@ -26,7 +26,7 @@ Write a console app which starts by asking the user for:
 - [X] Your application needs at least 2 classes. 
 - [X] Use these classes when you add items to a list. 
 - [X] You should be able to add items to the list(s) until you write "q" (for quit).
-- [X] Summarize price when presenting list. 
+- [X] Summarize the price when presenting the list. 
 - [X] The list should be sorted from low price to high and a sum at the bottom.
 - [X] Make it possible to add more products after presenting the list.
 - [X] Add Error handling to your console app.
@@ -36,5 +36,5 @@ https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/linq/
 
 
 ## Level 4 (Extra)
-[X] A) Add a Search function making it possible to search for products in presented list.
-[X] B) Highlight the searched item in presented list.
+A) [X] Add a Search function making it possible to search for products in presented list.
+B) [X] Highlight the searched item in the presented list.
