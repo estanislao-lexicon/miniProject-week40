@@ -5,57 +5,81 @@ using System.Linq;
 namespace productList
 {
     static class Run
-        {
-            public static bool Execute = true;
-        }
+    {            
+        public static bool Menu = true;
+    }
     class Program
     {
         static void Main(string[] args)
         {
-            List<Item> products = new List<Item>();
-            Run.Execute = true;
+            List<Item> products = new List<Item>();                       
             Menu(products);
         }
             
         static void Menu(List<Item> products)
         {
-            // Entering any letter, should restart the process
-            while(Run.Execute)
+            Run.Menu = true;
+
+            while(Run.Menu)
             {
                 Console.ForegroundColor = ConsoleColor.Magenta;
-                Console.WriteLine("To enter a new product - follow the instructions");
-                Console.ForegroundColor = ConsoleColor.DarkBlue;
-                Console.WriteLine("To print the list of all prducts, enter 'P' | To quit, enter 'Q'");
+                Console.WriteLine("To enter a new product - follow the instructions | To quit, enter 'Q'");                                
                 Console.ForegroundColor = ConsoleColor.Gray;
                 
-                Console.Write("Please enter the product category: ");
-                string category = InputTextAnalizer(products, Console.ReadLine());
-                if (!Run.Execute) return;
+                string category, name;
 
-                category = Capitalize(category);
-                                
-                Console.Write("Please enter the product name: ");
-                string name = InputTextAnalizer(products, Console.ReadLine());                
-                if (!Run.Execute) return;
+                while(true)
+                {
+                    Console.Write("Please enter the product category: ");
+                    category = Console.ReadLine();
+                    if(HandleCommand(products, category))
+                    {
+                        if (!Run.Menu) return;
+                        continue;
+                    }
+                    else
+                    {
+                        category = Capitalize(category);
+                        break;
+                    }
+                }
 
-                name = Capitalize(name);                
+                while(true)
+                {                
+                    Console.Write("Please enter the product name: ");
+                    name = Console.ReadLine();
+                    if(HandleCommand(products, name))
+                    {
+                        if (!Run.Menu) return;
+                        continue;
+                    }                    
+                    else
+                    {
+                        name = Capitalize(name);
+                        break;
+                    }                
+                }    
 
                 double price = 0;
                 while(true)
                 {
                     Console.Write("Please enter the product price: ");
-                    string priceString = InputTextAnalizer(products, Console.ReadLine());
-                    if (!Run.Execute) return;
-
+                    string priceString = Console.ReadLine();
                     if(double.TryParse(priceString, out price))
                     {
                         break;
                     }
-                    else
+
+                    if(HandleCommand(products, priceString))
+                    {
+                        if (!Run.Menu) return;
+                        continue;
+                    }
+                    else                    
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine("Please enter a number\n");
-                        Console.ForegroundColor = ConsoleColor.Gray;                                                             
+                        Console.ForegroundColor = ConsoleColor.Gray;                    
                     }
                 }   
                 
@@ -68,57 +92,73 @@ namespace productList
             } 
         }
 
+        static bool HandleCommand(List<Item> products, string inputText)
+        {            
+            string text = inputText.ToUpper();
+            List<Item> productsSorted = products.OrderBy(product => product.Price).ToList();
+
+            if (text == "P")
+            {
+                Menu(products);
+                return true;  
+            }
+            else if (text == "S")
+            {
+                SearchProduct(products);
+                return true;  
+            }            
+            else if (text == "Q")
+            {
+                Run.Menu = false; 
+                PrintProductList(products);                 
+                return true;  
+            }
+
+            return false;  
+        }    
+
+        static void WaitForCommand(List<Item> products)
+        {
+            Console.ForegroundColor = ConsoleColor.DarkBlue;
+            Console.WriteLine("To enter a new product, enter 'P' | To search for a product, enter 'S' | To quit, enter 'Q'");
+            Console.ForegroundColor = ConsoleColor.Gray;
+
+            Console.Write("> ");
+            string input = Console.ReadLine();
+            if(input.ToUpper() != "Q")
+            {
+                HandleCommand(products, input);
+            }            
+        }
+
+        static string Capitalize(string input)
+        {
+            if (string.IsNullOrEmpty(input)) return input;
+            return char.ToUpper(input[0]) + input.Substring(1).ToLower();
+        }   
+
         static void PrintProductList(List<Item> products)
         {
             if(!products.Any())
             {
-                Console.WriteLine("No products in the list. Please add a product and try again.\n");                
-                return;
+                Console.WriteLine("No products in the list\n");                                
             }
-
-            var productsSorted = products.OrderBy(product => product.Price).ToList();
-
-            Console.WriteLine("\n----------------------------------");
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("Category".PadRight(20) + "Name".PadRight(20) + "Price".PadRight(20));
-            
-            Console.ForegroundColor = ConsoleColor.Gray;
-            foreach(Item product in productsSorted)    
+            else 
             {
-                product.Print();
+                Console.WriteLine("\n----------------------------------");
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Category".PadRight(20) + "Name".PadRight(20) + "Price".PadRight(20));
+                
+                Console.ForegroundColor = ConsoleColor.Gray;
+                foreach(Item product in products)    
+                {
+                    product.Print();
+                }
+                double totalPrice = products.Sum(product => product.Price);
+                Console.WriteLine("\n ".PadRight(21) + "Total amount:".PadRight(20) + totalPrice.ToString().PadRight(20));      
+                Console.WriteLine("----------------------------------\n");
             }
-            double totalPrice = products.Sum(product => product.Price);
-            Console.WriteLine("\n ".PadRight(21) + "Total amount:".PadRight(20) + totalPrice.ToString().PadRight(20));      
-            Console.WriteLine("----------------------------------\n");
-
-            // Console.ForegroundColor = ConsoleColor.DarkBlue;
-            // Console.WriteLine("To enter a new product, enter 'E' | To search for a product, enter 'S' | To quit, enter 'Q'");
-            // Console.ForegroundColor = ConsoleColor.Gray;
-
-            // string input = Console.ReadLine();
-            // InputTextAnalizer(products, input);            
-        }            
-        
-
-        static string InputTextAnalizer(List<Item> products, string inputText)
-        {            
-            string text = inputText.ToUpper();
-            switch (text)
-            {
-                case "Q":
-                    Run.Execute = false;
-                    break;
-                case "P":
-                    PrintProductList(products);
-                    break;
-                case "S":
-                    SearchProduct(products);
-                    break;
-                default:
-                    return inputText;
-            }
-
-            return inputText;
+            WaitForCommand(products);
         }    
 
         static void SearchProduct(List<Item> products)
@@ -126,21 +166,29 @@ namespace productList
             // Should return all list, with search match in color!
             Console.Write("Enter product name: ");
             string textToSearch = Console.ReadLine()?.ToLower();
+            textToSearch = Capitalize(textToSearch);
 
-            var foundProducts = products.Where(product => product.Name.ToLower() == textToSearch).ToList();
+            bool foundProducts = products.Any(product => product.Name.Contains(textToSearch));
 
             Console.WriteLine("\n----------------------------------");
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Category".PadRight(20) + "Name".PadRight(20) + "Price".PadRight(20));
             Console.ForegroundColor = ConsoleColor.Gray;
 
-            if (foundProducts.Any())
+            if (foundProducts == true)
             {
-                foreach (Item product in foundProducts)
+                foreach (Item product in products)
                 {
-                    Console.ForegroundColor = ConsoleColor.DarkMagenta;
-                    product.Print();
-                    Console.ForegroundColor = ConsoleColor.Gray;
+                    if(textToSearch == product.Name)
+                    {
+                        Console.ForegroundColor = ConsoleColor.DarkMagenta;
+                        product.Print();
+                    }   
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.Gray; 
+                        product.Print();
+                    }
                 }
             }
             else
@@ -149,13 +197,9 @@ namespace productList
             }
             
             Console.WriteLine("----------------------------------\n");
-        }
 
-        static string Capitalize(string input)
-        {
-            if (string.IsNullOrEmpty(input)) return input;
-            return char.ToUpper(input[0]) + input.Substring(1).ToLower();
-        }    
+            WaitForCommand(products);
+        }
     }
 
     class Item
