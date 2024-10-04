@@ -31,7 +31,7 @@ Write a console app which starts by asking the user for:
 - [X] Make it possible to add more products after presenting the list.
 - [X] Add Error handling to your console app.
 
-- [] Refactor your code using "Linq" if possible.
+- [X] Refactor your code using "Linq" if possible.
 https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/linq/
 
 

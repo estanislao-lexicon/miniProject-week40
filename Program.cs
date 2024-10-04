@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Formats.Asn1;
 using System.Linq;
 
 namespace productList
@@ -12,11 +13,11 @@ namespace productList
     {
         static void Main(string[] args)
         {
-            List<Item> products = new List<Item>();                       
-            Menu(products);
+            List<Item> productsList = new List<Item>();                       
+            Menu(productsList);
         }
             
-        static void Menu(List<Item> products)
+        static void Menu(List<Item> productsList)
         {
             Run.Menu = true;
 
@@ -32,7 +33,7 @@ namespace productList
                 {
                     Console.Write("Please enter the product category: ");
                     category = Console.ReadLine();
-                    if(HandleCommand(products, category))
+                    if(HandleCommand(productsList, category))
                     {
                         if (!Run.Menu) return;
                         continue;
@@ -48,7 +49,7 @@ namespace productList
                 {                
                     Console.Write("Please enter the product name: ");
                     name = Console.ReadLine();
-                    if(HandleCommand(products, name))
+                    if(HandleCommand(productsList, name))
                     {
                         if (!Run.Menu) return;
                         continue;
@@ -70,7 +71,7 @@ namespace productList
                         break;
                     }
 
-                    if(HandleCommand(products, priceString))
+                    if(HandleCommand(productsList, priceString))
                     {
                         if (!Run.Menu) return;
                         continue;
@@ -82,9 +83,8 @@ namespace productList
                         Console.ForegroundColor = ConsoleColor.Gray;                    
                     }
                 }   
-                
-                
-                products.Add(new Item(category, name, price));
+                                
+                productsList.Add(new Item(category, name, price));
 
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("The product was succesfully added!");
@@ -92,54 +92,58 @@ namespace productList
             } 
         }
 
-        static bool HandleCommand(List<Item> products, string inputText)
+        static bool HandleCommand(List<Item> productsList, string commandInput)
         {            
-            string text = inputText.ToUpper();
-            List<Item> productsSorted = products.OrderBy(product => product.Price).ToList();
-
-            if (text == "P")
-            {
-                Menu(products);
-                return true;  
-            }
-            else if (text == "S")
-            {
-                SearchProduct(products);
-                return true;  
-            }            
-            else if (text == "Q")
+            string commandToHandle = commandInput.ToUpper();
+            List<Item> productsSorted = productsList.OrderBy(product => product.Price).ToList();
+            
+            if (commandToHandle == "Q")
             {
                 Run.Menu = false; 
-                PrintProductList(products);                 
+                PrintProductList(productsList);                 
                 return true;  
             }
+            else if(Run.Menu == true)
+            {
+                return false;
+            }
+            else if (commandToHandle == "P")
+            {
+                Menu(productsList);                
+                return true;  
+            }
+            else if (commandToHandle == "S")
+            {
+                SearchProduct(productsList);
+                return true;  
+            }                        
 
             return false;  
         }    
 
-        static void WaitForCommand(List<Item> products)
+        static void WaitForCommand(List<Item> productsList)
         {
             Console.ForegroundColor = ConsoleColor.DarkBlue;
             Console.WriteLine("To enter a new product, enter 'P' | To search for a product, enter 'S' | To quit, enter 'Q'");
             Console.ForegroundColor = ConsoleColor.Gray;
 
             Console.Write("> ");
-            string input = Console.ReadLine();
-            if(input.ToUpper() != "Q")
+            string newCommand = Console.ReadLine().ToUpper();
+            if(newCommand != "Q")
             {
-                HandleCommand(products, input);
+                HandleCommand(productsList, newCommand);
             }            
         }
 
-        static string Capitalize(string input)
+        static string Capitalize(string textToCapitalize)
         {
-            if (string.IsNullOrEmpty(input)) return input;
-            return char.ToUpper(input[0]) + input.Substring(1).ToLower();
+            if (string.IsNullOrEmpty(textToCapitalize)) return textToCapitalize;
+            return char.ToUpper(textToCapitalize[0]) + textToCapitalize.Substring(1).ToLower();
         }   
 
-        static void PrintProductList(List<Item> products)
+        static void PrintProductList(List<Item> productsList)
         {
-            if(!products.Any())
+            if(!productsList.Any())
             {
                 Console.WriteLine("No products in the list\n");                                
             }
@@ -150,25 +154,23 @@ namespace productList
                 Console.WriteLine("Category".PadRight(20) + "Name".PadRight(20) + "Price".PadRight(20));
                 
                 Console.ForegroundColor = ConsoleColor.Gray;
-                foreach(Item product in products)    
+                foreach(Item product in productsList)    
                 {
                     product.Print();
                 }
-                double totalPrice = products.Sum(product => product.Price);
+                double totalPrice = productsList.Sum(product => product.Price);
                 Console.WriteLine("\n ".PadRight(21) + "Total amount:".PadRight(20) + totalPrice.ToString().PadRight(20));      
                 Console.WriteLine("----------------------------------\n");
             }
-            WaitForCommand(products);
+            WaitForCommand(productsList);
         }    
 
-        static void SearchProduct(List<Item> products)
-        {
-            // Should return all list, with search match in color!
+        static void SearchProduct(List<Item> productsList)
+        {            
             Console.Write("Enter product name: ");
-            string textToSearch = Console.ReadLine()?.ToLower();
-            textToSearch = Capitalize(textToSearch);
+            string textToSearch = Capitalize(Console.ReadLine());            
 
-            bool foundProducts = products.Any(product => product.Name.Contains(textToSearch));
+            bool foundProducts = productsList.Any(product => product.Name.Contains(textToSearch));
 
             Console.WriteLine("\n----------------------------------");
             Console.ForegroundColor = ConsoleColor.Green;
@@ -177,7 +179,7 @@ namespace productList
 
             if (foundProducts == true)
             {
-                foreach (Item product in products)
+                foreach (Item product in productsList)
                 {
                     if(textToSearch == product.Name)
                     {
@@ -198,7 +200,7 @@ namespace productList
             
             Console.WriteLine("----------------------------------\n");
 
-            WaitForCommand(products);
+            WaitForCommand(productsList);
         }
     }
 
