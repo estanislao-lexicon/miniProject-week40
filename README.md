@@ -36,5 +36,5 @@ https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/linq/
 
 
 ## Level 4 (Extra)
-A) [X] Add a Search function making it possible to search for products in presented list.
-B) [X] Highlight the searched item in the presented list.
+1) [X] Add a Search function making it possible to search for products in the presented list.
+2) [X] Highlight the searched item in the presented list.
