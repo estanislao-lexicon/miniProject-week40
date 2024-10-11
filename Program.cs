@@ -141,8 +141,9 @@ namespace productList
             return char.ToUpper(textToCapitalize[0]) + textToCapitalize.Substring(1).ToLower();
         }   
 
-        static void PrintProductList(List<Item> productsList)
+        static void PrintProductList(List<Item> productsList)        
         {
+            List<Item> productListSorted = productsList.OrderBy(product => product.Price).ToList();
             if(!productsList.Any())
             {
                 Console.WriteLine("No products in the list\n");                                
@@ -154,15 +155,15 @@ namespace productList
                 Console.WriteLine("Category".PadRight(20) + "Name".PadRight(20) + "Price".PadRight(20));
                 
                 Console.ForegroundColor = ConsoleColor.Gray;
-                foreach(Item product in productsList)    
+                foreach(Item product in productListSorted)    
                 {
                     product.Print();
                 }
-                double totalPrice = productsList.Sum(product => product.Price);
+                double totalPrice = productListSorted.Sum(product => product.Price);
                 Console.WriteLine("\n ".PadRight(21) + "Total amount:".PadRight(20) + totalPrice.ToString().PadRight(20));      
                 Console.WriteLine("----------------------------------\n");
             }
-            WaitForCommand(productsList);
+            WaitForCommand(productListSorted);
         }    
 
         static void SearchProduct(List<Item> productsList)
